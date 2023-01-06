@@ -1,6 +1,7 @@
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = 'The recipe you requested does not exist';
 
   render(data) {
     this.#data = data;
@@ -9,7 +10,7 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderSpinner = function () {
+  renderSpinner() {
     const markup = `
     <div class="spinner">
       <svg>
@@ -18,7 +19,22 @@ class RecipeView {
     </div>`;
     this.#clear();
     this.#parentElement.insertAdjacentHTML('beforeend', markup);
-  };
+  }
+
+  renderError(message = this.#errorMessage) {
+    const markup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="src/img/icons.svg#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>`;
+
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('beforeend', markup);
+  }
 
   #clear() {
     this.#parentElement.innerHTML = '';
