@@ -31,8 +31,28 @@ const showRecipe = async function () {
     // 1. Loading recipe
     // Display spinner
     rennderSpinner(recipeContainer);
+
+    // Get the hash of the recipe
+    const id = window.location.hash.slice(1);
+
+    // Guard class: If the id is an empty string
+    if (id === '') {
+      const markup = `
+        <div class="message">
+          <div>
+            <svg>
+              <use href="src/img/icons.svg#icon-smile"></use>
+            </svg>
+          </div>
+          <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+        </div>`;
+      recipeContainer.innerHTML = '';
+      recipeContainer.insertAdjacentHTML('afterbegin', markup);
+      return;
+    }
+
     const response = await fetch(
-      'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
     );
     const data = await response.json();
 
@@ -154,3 +174,8 @@ const showRecipe = async function () {
   }
 };
 showRecipe();
+
+// window.addEventListener('hashchange', showRecipe);
+// window.addEventListener('load', showRecipe);
+// Merge n event listeners into one event listener
+['load', 'hashchange'].forEach(ev => window.addEventListener(ev, showRecipe));
