@@ -24,6 +24,15 @@ class RecipeView {
     this.#parentElement.innerHTML = '';
   }
 
+  addHandlerRender(handlerFuntion) {
+    // window.addEventListener('hashchange', showRecipe);
+    // window.addEventListener('load', showRecipe);
+    // Merge n event listeners into one event listener
+    ['load', 'hashchange'].forEach(ev =>
+      window.addEventListener(ev, handlerFuntion)
+    );
+  }
+
   #generateMarkup() {
     return `
         <figure class="recipe__fig">
