@@ -21,6 +21,16 @@ const controlRecipes = async function () {
   }
 };
 
+const controlSearchRecipes = async function (searchTerm) {
+  try {
+    await model.loadSearchRecipes(searchTerm);
+    console.log(model.state.search.results);
+  } catch (error) {
+    console.log(error);
+  }
+};
+controlSearchRecipes('burger');
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
 };
