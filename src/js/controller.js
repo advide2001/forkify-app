@@ -1,5 +1,6 @@
 import * as model from './model.js';
 import recipeView from './view/recipeView';
+import searchView from './view/searchView';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -21,17 +22,25 @@ const controlRecipes = async function () {
   }
 };
 
-const controlSearchRecipes = async function (searchTerm) {
+const controlSearchRecipes = async function () {
   try {
+    // Get the search query
+    const searchTerm = searchView.getQuery();
+    // Guard class, no query return immediately
+    if (!searchTerm) return;
+    // laod data results
     await model.loadSearchRecipes(searchTerm);
-    console.log(model.state.search.results);
+    // Render results
+    resultsView.render(model.state.search.results);
+    // Clear the input field
+    searchView.clearInput();
   } catch (error) {
     console.log(error);
   }
 };
-controlSearchRecipes('burger');
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchRecipes);
 };
 init();
