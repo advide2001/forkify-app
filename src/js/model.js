@@ -4,10 +4,14 @@ import recipeView from './view/recipeView.js';
 
 export const state = {
   recipe: {},
+  search: {
+    queryTerm: '',
+    results: [],
+  },
 };
 
 export const loadRecipe = async function (id) {
-  const data = await getJSON(`${API_URL}/${id}`);
+  const data = await getJSON(`${API_URL}${id}`);
   try {
     let { recipe } = data.data;
     state.recipe = {
@@ -22,5 +26,23 @@ export const loadRecipe = async function (id) {
     };
   } catch (err) {
     throw err;
+  }
+};
+
+export const loadSearchRecipes = async function (queryTerm) {
+  try {
+    state.search.queryTerm = queryTerm;
+    const data = await getJSON(`${API_URL}?search=${queryTerm}`);
+    state.search.results = data.data.recipes.map(recipe => {
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        image: recipe.image_url,
+      };
+    });
+  } catch (error) {
+    console.log('Error in loadSearchResults - model.js');
+    throw error;
   }
 };
