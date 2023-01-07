@@ -1,6 +1,7 @@
 import * as model from './model.js';
 import recipeView from './view/recipeView';
 import searchView from './view/searchView';
+import resultsView from './view/resultsView.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -24,6 +25,7 @@ const controlRecipes = async function () {
 
 const controlSearchRecipes = async function () {
   try {
+    resultsView.renderSpinner();
     // Get the search query
     const searchTerm = searchView.getQuery();
     // Guard class, no query return immediately

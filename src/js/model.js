@@ -11,7 +11,7 @@ export const state = {
 };
 
 export const loadRecipe = async function (id) {
-  const data = await getJSON(`${API_URL}${id}`);
+  const data = await getJSON(`${API_URL}/${id}`);
   try {
     let { recipe } = data.data;
     state.recipe = {
@@ -42,7 +42,6 @@ export const loadSearchRecipes = async function (queryTerm) {
       };
     });
   } catch (error) {
-    console.log('Error in loadSearchResults - model.js');
     throw error;
   }
 };
