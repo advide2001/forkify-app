@@ -76,15 +76,17 @@ class RecipeView extends View {
             ${this._data.ingredients
               .map(ingredient => {
                 return `<li class="recipe__ingredient">
-              <svg class="recipe__icon">
-                <use href="src/img/icons.svg#icon-check"></use>
-              </svg>
-              <div class="recipe__quantity">${ingredient.quantity}</div>
-              <div class="recipe__description">
-                <span class="recipe__unit">${ingredient.unit}</span>
-                ${ingredient.description}
-              </div>
-            </li>`;
+                          <svg class="recipe__icon">
+                            <use href="src/img/icons.svg#icon-check"></use>
+                          </svg>
+                          <div class="recipe__quantity">${
+                            ingredient.quantity > 0 ? ingredient.quantity : ''
+                          }</div>
+                          <div class="recipe__description">
+                            <span class="recipe__unit">${ingredient.unit}</span>
+                              ${ingredient.description}
+                          </div>
+                        </li>`;
               })
               .join('')}
           </ul>
