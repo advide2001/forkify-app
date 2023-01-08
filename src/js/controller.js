@@ -33,8 +33,8 @@ const controlSearchRecipes = async function () {
     if (!searchTerm) return;
     // laod data results
     await model.loadSearchRecipes(searchTerm);
-    // Render results
-    resultsView.render(model.getSearchResultsPerPage());
+    // Render initial results
+    resultsView.render(model.getSearchResultsPerPage(1));
     // Render initial pagination button
     paginationView.render(model.state.search);
     // Clear the input field
@@ -44,8 +44,16 @@ const controlSearchRecipes = async function () {
   }
 };
 
+const controlPageChangeRecipes = function (goToPage) {
+  // Render NEW results
+  resultsView.render(model.getSearchResultsPerPage(goToPage));
+  // Render NEW pagination button
+  paginationView.render(model.state.search);
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchRecipes);
+  paginationView.addHandlerPageChange(controlPageChangeRecipes);
 };
 init();

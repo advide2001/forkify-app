@@ -3,9 +3,23 @@ import View from './view';
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
+  addHandlerPageChange(handlerFunction) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--inline');
+
+      // Guard class
+      if (!btn) return;
+
+      const goToPage = +btn.dataset.goto;
+      handlerFunction(goToPage);
+    });
+  }
+
   _generatePrevButton(pageNumber) {
     return `
-    <button class="btn--inline pagination__btn--prev">
+    <button data-goto = "${
+      pageNumber - 1
+    }" class="btn--inline pagination__btn--prev">
       <svg class="search__icon">
         <use href="src/img/icons.svg#icon-arrow-left"></use>
       </svg>
@@ -15,7 +29,9 @@ class PaginationView extends View {
   }
   _generateNextButton(pageNumber) {
     return `
-    <button class="btn--inline pagination__btn--next">
+    <button data-goto = "${
+      pageNumber + 1
+    }" class="btn--inline pagination__btn--next">
       <span>page ${pageNumber + 1}</span>
       <svg class="search__icon">
         <use href="src/img/icons.svg#icon-arrow-right"></use>
