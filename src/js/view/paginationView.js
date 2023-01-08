@@ -3,26 +3,50 @@ import View from './view';
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
+  _generatePrevButton(pageNumber) {
+    return `
+    <button class="btn--inline pagination__btn--prev">
+      <svg class="search__icon">
+        <use href="src/img/icons.svg#icon-arrow-left"></use>
+      </svg>
+      <span>page ${pageNumber - 1}</span>
+    </button>
+    `;
+  }
+  _generateNextButton(pageNumber) {
+    return `
+    <button class="btn--inline pagination__btn--next">
+      <span>page ${pageNumber + 1}</span>
+      <svg class="search__icon">
+        <use href="src/img/icons.svg#icon-arrow-right"></use>
+      </svg>
+    </button>
+    `;
+  }
+
   _generateMarkup() {
+    const currentPage = this._data.page;
     const numOfPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
-    console.log(numOfPages);
+
     // at page 1, and there are no pages
-    if (this._data.page === 1 && numOfPages > 1) {
-      return 'page 1, other pages';
+    if (currentPage === 1 && numOfPages > 1) {
+      return this._generateNextButton(currentPage);
     }
     // at page 1, and there no more pages
-    if (this._data.page === 1 && numOfPages === 1) {
-      return 'only page 1';
+    if (currentPage === 1 && numOfPages === 1) {
+      return ``;
     }
     // Last page
-    if (this._data.page === numOfPages && numOfPages !== 1) {
-      return 'last page';
+    if (currentPage === numOfPages && numOfPages !== 1) {
+      return this._generatePrevButton(currentPage);
     }
     // Other page
-    if (this._data.page < numOfPages) {
-      return 'other page';
+    if (currentPage < numOfPages && currentPage > 1) {
+      let markup = this._generateNextButton(currentPage);
+      markup += this._generatePrevButton(currentPage);
+      return markup;
     }
   }
 }
