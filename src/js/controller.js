@@ -33,7 +33,7 @@ const controlSearchRecipes = async function () {
     // laod data results
     await model.loadSearchRecipes(searchTerm);
     // Render results
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPerPage());
     // Clear the input field
     searchView.clearInput();
   } catch (error) {

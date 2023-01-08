@@ -1,6 +1,9 @@
 export default class View {
   render(data) {
     this._data = data;
+    // Check if the data actually exists
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
     const markup = this._generateMarkup();
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
