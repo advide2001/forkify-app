@@ -26,6 +26,10 @@ class BookmarksView extends View {
         </a>
       </li>`;
   }
+
+  addHandlerRender(handlerFunction) {
+    window.addEventListener('load', handlerFunction);
+  }
 }
 
 export default new BookmarksView();
