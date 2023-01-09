@@ -88,3 +88,10 @@ export const removeBookmark = function (id) {
   if (id === state.recipe.id) state.recipe.bookmarked = false;
   persistData();
 };
+
+const init = function () {
+  const data = localStorage.getItem('bookmarks');
+  if (data) state.bookmarks = JSON.parse(data);
+};
+init();
+console.log(state);
