@@ -34,6 +34,8 @@ const controlSearchRecipes = async function () {
     const searchTerm = searchView.getQuery();
     // Guard class, no query return immediately
     if (!searchTerm) return;
+    // Change page number back to one
+    model.state.search.page = 1;
     // laod data results
     await model.loadSearchRecipes(searchTerm);
     // Render initial results
